@@ -38,7 +38,26 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let decodedString = '';
+    //--- Split morse code by 10 digits ---//
+    let symbolsArray = expr.split(/(?<=^(?:.{10})+)/);
+
+    //--- Decoding each symbol---//
+    symbolsArray.forEach(el => {
+        if (el === '**********'){
+            decodedString+=' ';
+        } else {
+            let decodedSymbol = '';
+
+            //--- Convert each number pair to .- ===//
+            el.split(/(?<=^(?:.{2})+)/).forEach(el => {
+                if (el === '10') { decodedSymbol+='.' }
+                else if (el === '11') { decodedSymbol+='-' }
+            });
+            decodedString+=MORSE_TABLE[decodedSymbol];
+        };
+    });
+    return decodedString;
 }
 
 module.exports = {
